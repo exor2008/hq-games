@@ -1,4 +1,4 @@
-use home_page::{index, states::ServersState};
+use home_page::{index, register, states::ServersState};
 use rocket::fs::FileServer;
 use rocket_dyn_templates::Template;
 
@@ -9,7 +9,7 @@ extern crate rocket;
 fn rocket() -> _ {
     rocket::build()
         .mount("/", FileServer::from("static/"))
-        .mount("/", routes![index])
+        .mount("/", routes![index, register])
         .manage(ServersState::default())
         .attach(Template::fairing())
 }

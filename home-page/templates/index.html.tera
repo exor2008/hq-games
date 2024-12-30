@@ -8,6 +8,7 @@
   </tr>
 
   {% for game in servers.games %}
-  <td>game.name</td>
+  <td>{{ game.name }}</td>
+  <td>{{ game.address }}</td>
   {% endfor %}
 </table>

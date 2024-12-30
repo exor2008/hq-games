@@ -1,3 +1,5 @@
+use std::net::Ipv4Addr;
+
 use crate::states::{Game, Games};
 use rocket::serde::Serialize;
 
@@ -17,6 +19,7 @@ pub struct GamesContext {
 #[serde(crate = "rocket::serde")]
 pub struct GameContext {
     name: String,
+    address: Ipv4Addr,
 }
 
 impl From<Games> for GamesContext {
@@ -29,6 +32,9 @@ impl From<Games> for GamesContext {
 
 impl From<Game> for GameContext {
     fn from(value: Game) -> Self {
-        Self { name: value.name }
+        Self {
+            name: value.name,
+            address: value.address,
+        }
     }
 }

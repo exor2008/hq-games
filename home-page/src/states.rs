@@ -1,3 +1,5 @@
+use std::net::Ipv4Addr;
+
 use rocket::tokio::sync::Mutex;
 
 #[derive(Default)]
@@ -10,7 +12,8 @@ pub struct Games {
     pub games: Vec<Game>,
 }
 
-#[derive(Default, Clone)]
+#[derive(Clone)]
 pub struct Game {
     pub name: String,
+    pub address: Ipv4Addr,
 }
