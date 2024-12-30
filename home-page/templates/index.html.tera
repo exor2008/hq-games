@@ -1,0 +1,13 @@
+<h1>Hello</h1>
+
+<h2>List of servers</h2>
+
+<table>
+  <tr>
+    <th>Name</th>
+  </tr>
+
+  {% for game in servers.games %}
+  <td>game.name</td>
+  {% endfor %}
+</table>
