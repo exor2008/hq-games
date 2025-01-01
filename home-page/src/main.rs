@@ -1,4 +1,4 @@
-use home_page::{db::Db, index, register, states::ServersState, users};
+use home_page::{db::Db, index, register, states::GamesState, users};
 use rocket::fs::FileServer;
 use rocket_db_pools::Database;
 use rocket_dyn_templates::Template;
@@ -11,7 +11,7 @@ fn rocket() -> _ {
     rocket::build()
         .mount("/", FileServer::from("static/"))
         .mount("/", routes![index, register, users])
-        .manage(ServersState::default())
+        .manage(GamesState::default())
         .attach(Template::fairing())
         .attach(Db::init())
 }
