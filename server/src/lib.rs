@@ -1,8 +1,9 @@
-use std::collections::HashMap;
+use std::net::IpAddr;
 
 use reqwest::Client;
 use rocket::{
     fairing::{Fairing, Info, Kind},
+    serde::{Deserialize, Serialize},
     Orbit, Rocket,
 };
 
@@ -19,15 +20,17 @@ impl Fairing for Register {
     async fn on_liftoff(&self, rocket: &Rocket<Orbit>) {
         let client = Client::new();
 
-        let mut payload = HashMap::new();
-        payload.insert("address", rocket.config().address.to_string());
-        payload.insert("name", "Vasya".to_string());
+        let game = Game {
+            name: "Game1".to_string(),
+            address: rocket.config().address,
+            port: rocket.config().port,
+        };
 
-        rocket::info!("address: {}", payload["address"]);
+        rocket::info!("address: {}", game.address);
 
         let res = client
             .post("http://127.0.0.1:8000/register")
-            .json(&payload)
+            .json(&game)
             .send()
             .await;
 
@@ -41,4 +44,12 @@ impl Fairing for Register {
 
         res.expect("Unable to register a server");
     }
+}
+
+#[derive(Serialize, Deserialize)]
+#[serde(crate = "rocket::serde")]
+struct Game {
+    name: String,
+    address: IpAddr,
+    port: u16,
 }

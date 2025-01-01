@@ -1,14 +1,18 @@
-<h1>Hello</h1>
+<h1>HQ games</h1>
 
 <h2>List of servers</h2>
 
 <table>
   <tr>
     <th>Name</th>
+    <th>Address</th>
+    <th>Port</th>
   </tr>
 
   {% for game in games %}
   <td>{{ game.name }}</td>
   <td>{{ game.address }}</td>
+  <td>{{ game.port }}</td>
+  <td><a href="/index.html">Join</a></td>
   {% endfor %}
 </table>
