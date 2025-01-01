@@ -1,0 +1,19 @@
+<h1>Users</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Hashed password</th>
+    <th>Role</th>
+    <th>Created</th>
+  </tr>
+
+  {% for user in users %}
+  <td>{{ user.name }}</td>
+  <td>{{ user.email }}</td>
+  <td>{{ user.hashed_password }}</td>
+  <td>{{ user.role }}</td>
+  <td>{{ user.created }}</td>
+  {% endfor %}
+</table>
