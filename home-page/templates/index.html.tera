@@ -13,6 +13,6 @@
   <td>{{ game.name }}</td>
   <td>{{ game.address }}</td>
   <td>{{ game.port }}</td>
-  <td><a href="/index.html">Join</a></td>
+  <td><a href="/client/index.html">Join</a></td>
   {% endfor %}
 </table>
