@@ -5,7 +5,8 @@ edition = "2021"
 
 [dependencies]
 sqlx = { version = "0.7.4", features = ["chrono"] }
-rocket = { version = "0.5.1", features = ["json"] }
+rocket = { version = "0.5.1", features = ["json", "secrets"] }
 rocket_dyn_templates = { version = "0.2.0", features = ["tera"] }
 rocket_db_pools = { version = "0.2.0", features = ["sqlx_sqlite"] }
 chrono = { version = "0.4.39", features = ["serde"] }
+argon2 = "0.5.3"

@@ -1,5 +1,22 @@
 <h1>HQ games</h1>
 
+{% if user is undefined %}
+<form method="post" accept-charset="utf-8">
+  <label for="name">name</label>
+  <input type="text" name="name" id="name" value="" />
+  <label for="password">password</label>
+  <input type="password" name="password" id="password" value="" />
+  <br /><br />
+  <button type="submit" formaction="/login">Login</button>
+  <button type="submit" formaction="/signup">Sign Up</button>
+</form>
+
+{% endif %} {% if message %}
+<p>
+  {% if message.kind %} {{ message.kind }}: {% endif %}{{ message.message }}
+</p>
+{% endif %}
+
 <h2>List of servers</h2>
 
 <table>
@@ -13,6 +30,7 @@
   <td>{{ game.name }}</td>
   <td>{{ game.address }}</td>
   <td>{{ game.port }}</td>
+  {% if user is defined %}
   <td><a href="/client/index.html">Join</a></td>
-  {% endfor %}
+  {% endif %} {% endfor %}
 </table>

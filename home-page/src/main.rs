@@ -1,4 +1,8 @@
-use home_page::{db::Db, index, register, states::GamesState, users};
+use home_page::{
+    db::Db,
+    model::GamesState,
+    routes::{admin, login, routes},
+};
 use rocket::fs::FileServer;
 use rocket_db_pools::Database;
 use rocket_dyn_templates::Template;
@@ -10,7 +14,9 @@ extern crate rocket;
 fn rocket() -> _ {
     rocket::build()
         .mount("/", FileServer::from("static/"))
-        .mount("/", routes![index, register, users])
+        .mount("/", routes())
+        .mount("/", login::routes())
+        .mount("/admin", admin::routes())
         .manage(GamesState::default())
         .attach(Template::fairing())
         .attach(Db::init())
