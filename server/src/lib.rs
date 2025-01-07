@@ -29,7 +29,7 @@ impl Fairing for Register {
         rocket::info!("address: {}", game.address);
 
         let res = client
-            .post("http://127.0.0.1:8000/register")
+            .post("http://127.0.0.1:8000/api/register")
             .json(&game)
             .send()
             .await;

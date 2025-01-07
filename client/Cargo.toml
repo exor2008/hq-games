@@ -4,12 +4,18 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-bevy = "0.15.0"
+bevy = "0.15.1"
+wasm-bindgen = "0.2.99"
+web-sys = { version = "0.3.76", features = [
+    "console",
+    "Document",
+    "HtmlElement",
+    "Node",
+    "Text",
+    "Window",
+] }
 
 [profile.release]
 opt-level = 's'
 lto = true
 codegen-units = 1
-
-# [target.wasm32-unknown-unknown]
-# runner = "wasm-server-runner"

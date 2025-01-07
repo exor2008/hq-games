@@ -1,6 +1,17 @@
 <html>
   <head>
-    <h1>Bevy client</h1>
-    <link data-trunk rel="rust" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Trunk | Vanilla | web-sys</title>
   </head>
+  <body>
+    <link data-trunk rel="rust" data-initializer="src/initializer.mjs" />
+  </body>
+
+  <script type="module">
+    addEventListener("TrunkApplicationStarted", (event) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      window.wasmBindings.wasm_ffi(urlParams.get("name"));
+    });
+  </script>
 </html>

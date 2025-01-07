@@ -1,4 +1,5 @@
 use home_page::{
+    api,
     db::Db,
     model::GamesState,
     routes::{admin, login, routes},
@@ -17,6 +18,7 @@ fn rocket() -> _ {
         .mount("/", routes())
         .mount("/", login::routes())
         .mount("/admin", admin::routes())
+        .mount("/api", api::routes())
         .manage(GamesState::default())
         .attach(Template::fairing())
         .attach(Db::init())
