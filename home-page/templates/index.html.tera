@@ -31,6 +31,11 @@
   <td>{{ game.address }}</td>
   <td>{{ game.port }}</td>
   {% if user is defined %}
-  <td><a href="/client/index.html?name={{ user }}">Join</a></td>
+  <td>
+    <a
+      href="/client/index.html?user={{ user }}&address={{ game.address }}&port={{ game.port }}"
+      >Join</a
+    >
+  </td>
   {% endif %} {% endfor %}
 </table>

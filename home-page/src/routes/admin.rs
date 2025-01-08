@@ -22,8 +22,6 @@ pub async fn users(user: User, mut db: Connection<Db>) -> Result<Template, Flash
     .fetch_one(&mut **db)
     .await
     {
-        rocket::info!("Here!");
-
         let users: Vec<DbUser> = sqlx::query_as("SELECT * FROM users")
             .fetch_all(&mut **db)
             .await

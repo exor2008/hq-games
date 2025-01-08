@@ -8,6 +8,7 @@ use rocket::response::{Flash, Redirect};
 use rocket::Route;
 use rocket_db_pools::sqlx;
 use rocket_db_pools::Connection;
+use uuid::Uuid;
 
 #[post("/login", data = "<login>")]
 pub async fn login(
@@ -15,8 +16,6 @@ pub async fn login(
     login: Form<Login<'_>>,
     mut db: Connection<Db>,
 ) -> Result<Flash<Redirect>, Flash<Redirect>> {
-    rocket::info!("search for: {}", login.name);
-
     if let Ok(user) = sqlx::query_as::<_, DbUser>(
         r#"
         SELECT id, name, hashed_password, role, created
@@ -64,19 +63,23 @@ pub async fn signup(
             "That username has already been taken",
         ))
     } else {
-        if let Ok(result) = sqlx::query(
+        let uuid = Uuid::new_v4();
+
+        if sqlx::query(
             r#"
-            INSERT INTO users (name, hashed_password, role)
-            VALUES ( ?1, ?2, ?3)
+            INSERT INTO users (id, name, hashed_password, role)
+            VALUES (?1, ?2, ?3, ?4)
             "#,
         )
+        .bind(&uuid)
         .bind(login.name)
         .bind(hash_password(login.password))
         .bind("user")
         .execute(&mut **db)
         .await
+        .is_ok()
         {
-            jar.add_private(("user_id", result.last_insert_rowid().to_string()));
+            jar.add_private(("user_id", uuid.to_string()));
             Ok(Flash::success(
                 Redirect::to(uri!(index)),
                 "You signed up successfully",

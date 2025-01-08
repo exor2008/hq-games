@@ -11,7 +11,11 @@
   <script type="module">
     addEventListener("TrunkApplicationStarted", (event) => {
       const urlParams = new URLSearchParams(window.location.search);
-      window.wasmBindings.wasm_ffi(urlParams.get("name"));
+      window.wasmBindings.send(
+        urlParams.get("user"),
+        urlParams.get("address"),
+        urlParams.get("port")
+      );
     });
   </script>
 </html>

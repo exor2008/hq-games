@@ -5,6 +5,7 @@ use rocket::serde::{Deserialize, Serialize};
 use rocket::tokio::sync::Mutex;
 use rocket::Request;
 use sqlx::types::chrono::{DateTime, Local};
+use sqlx::types::Uuid;
 use sqlx::FromRow;
 use std::net::IpAddr;
 
@@ -26,7 +27,7 @@ pub struct GamesState(pub Mutex<Games>);
 #[derive(Serialize, FromRow)]
 #[serde(crate = "rocket::serde")]
 pub struct DbUser {
-    pub id: i64,
+    pub id: Uuid,
     pub name: String,
     pub hashed_password: String,
     pub role: String,
@@ -35,7 +36,7 @@ pub struct DbUser {
 
 #[derive(Serialize)]
 #[serde(crate = "rocket::serde")]
-pub struct User(pub i64);
+pub struct User(pub Uuid);
 
 #[rocket::async_trait]
 impl<'r> FromRequest<'r> for User {
@@ -45,7 +46,7 @@ impl<'r> FromRequest<'r> for User {
         request
             .cookies()
             .get_private("user_id")
-            .and_then(|cookie| cookie.value().parse().ok())
+            .and_then(|cookie| Uuid::parse_str(cookie.value()).ok())
             .map(User)
             .or_forward(Status::Unauthorized)
     }
